@@ -1,7 +1,7 @@
 const fs = require("fs");
 const tele = "./../../telephone.json";
 const telephone = require(tele);
-const arrayShuffle = require("array-shuffle")
+const arrayShuffle = require("array-shuffle");
 
 
 module.exports.run = async (key, bot) => {
