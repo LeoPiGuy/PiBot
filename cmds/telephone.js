@@ -105,6 +105,7 @@ module.exports.run = async (bot, message, args) => {
 				if(!keh) return message.reply(`The key "${args[1]}" is not currently a game key.`)
 				let creator = telephone[args[1]]["user"];
 				if(creator == message.member.id) {
+					console.log("RUNNING COMMAND")
 					let runTelephone = require("./telephone/runTelephone.js");
 					runTelephone.run(keh, bot);
 				} else {

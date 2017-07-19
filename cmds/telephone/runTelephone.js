@@ -11,10 +11,16 @@ module.exports.run = async (key, bot) => {
 	let players = game.users;
 	let orderedPlayers = [];
 
-	for(let i in players) {
-		orderedPlayers.push(i);
-	}
-	orderedPlayers = arrayShuffle(orderedPlayers);
+	// for(let i in players) {
+	// 	orderedPlayers.push(i);
+	// }
+	// orderedPlayers = arrayShuffle(orderedPlayers);
+	let rawOrderedPlayers = [];
+    for(let i in players) {
+        rawOrderedPlayers.push(i);
+    }
+    orderedPlayers = arrayShuffle(rawOrderedPlayers);
+    console.log("orderedPlayers:" + orderedPlayers)
 	for(let i in game.channels) {
 		let channel = bot.channels.get(game.channels[i]);
 		let playerList = "1| " + orderedPlayers[0];
@@ -24,10 +30,10 @@ module.exports.run = async (key, bot) => {
 			playerList = `${playerList} \n ${k + 1}| ${orderedPlayers[k]}`;
 			console.log(name);
 		}
-		// channel.send("embed": {
-		// "title": `The game of telephone with the key ${key} has started! \n There are ${orderedPlayers.length()} players participating in the game. \n Here they are in order:`,
-		// "description": playerList
-		// });
+		channel.send("embed": {
+		"title": `The game of telephone with the key ${key} has started! \n There are ${orderedPlayers.length} players participating in the game. \n Here they are in order:`,
+		"description": playerList
+		});
 	}
     console.log(players);
 	console.log(orderedPlayers);
