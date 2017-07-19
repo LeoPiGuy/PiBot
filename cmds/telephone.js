@@ -25,7 +25,8 @@ module.exports.run = async (bot, message, args) => {
 					"channels": []
 				}
 				telephone[args[1]]["users"][message.member.id] = {
-						"name": message.member.displayName
+						"name": message.member.displayName,
+						"channel": message.channel.id
 				}
 				telephone[args[1]]["channels"].push(message.channel.id);
 				fs.writeFile("telephone.json",JSON.stringify(telephone, null, 4), err => {
@@ -70,7 +71,8 @@ module.exports.run = async (bot, message, args) => {
 						}
 					}
 					telephone[args[1]]["users"][message.member.id] = {
-						"name": message.member.displayName
+						"name": message.member.displayName,
+						"channel": message.channel.id
 					}
 					fs.writeFile("telephone.json",JSON.stringify(telephone, null, 4), err => {
 						if(err) throw err;
@@ -104,7 +106,7 @@ module.exports.run = async (bot, message, args) => {
 				let creator = telephone[args[1]]["user"];
 				if(creator == message.member.id) {
 					let runTelephone = require("./telephone/runTelephone.js");
-					runTelephone.run(keh);
+					runTelephone.run(keh, bot);
 				} else {
 					return message.reply(`You are not the one who started the game of telephone with the key ${keh}. Only he can start the game.`);
 				}

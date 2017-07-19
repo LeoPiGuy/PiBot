@@ -9,6 +9,7 @@
   "author": "LeoPiGuy",
   "license": "ISC",
   "dependencies": {
+    "array-shuffle": "^1.0.1",
     "async": "^2.5.0",
     "discord.js": "^11.1.0",
     "moment": "^2.18.1",
