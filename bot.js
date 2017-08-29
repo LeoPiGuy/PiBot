@@ -47,12 +47,12 @@ console.log("Prefix: " + botSettings.prefix);
 bot.on("ready", async () => {
 	console.log(`Bot is ready! | Username: ${bot.user.username}`);
 	//console.log(bot.commands);
-	/*try {
+	try {
 		let link = await bot.generateInvite(["ADMINISTRATOR"]);
 		console.log(link);
 	} catch(e) {
 		console.log(e.stack);
-	}*/
+	}
 
 	bot.setInterval(() => {
 		for(let i in bot.mutes) {

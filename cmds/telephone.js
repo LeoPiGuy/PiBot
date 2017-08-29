@@ -22,7 +22,8 @@ module.exports.run = async (bot, message, args) => {
 				telephone[args[1]] = {
 					"user": message.member.id,
 					"users": {},
-					"channels": []
+					"channels": [],
+					"begun": false
 				}
 				telephone[args[1]]["users"][message.member.id] = {
 						"name": message.member.displayName,
@@ -64,11 +65,15 @@ module.exports.run = async (bot, message, args) => {
 				// 	});
 				// } else 
 				if(!telephone[args[1]]["users"][message.member.id]) {
-					for(let i in telephone[args[1]]["channels"]) {
-						if(i !== message.channel.id) {
-							telephone[args[1]]["channels"].push(message.channel.id);
-							console.log(`I have added the channel ${message.channel.id} to the game of telephone with the key ${key}`)
-						}
+					// for(let i in telephone[args[1]]["channels"]) {
+					// 	if(i !== message.channel.id) {
+					// 		telephone[args[1]]["channels"].push(message.channel.id);
+					// 		console.log(`I have added the channel ${message.channel.id} to the game of telephone with the key ${key}`)
+					// 	}
+					// }
+					if(!telephone[args[1]]["channels"].includes(message.channel.id)) {
+						telephone[args[1]]["channels"].push(message.channel.id);
+						console.log(`I have added the channel ${message.channel.id} to the game of telephone with the key ${key}`)
 					}
 					telephone[args[1]]["users"][message.member.id] = {
 						"name": message.member.displayName,
@@ -105,9 +110,17 @@ module.exports.run = async (bot, message, args) => {
 				if(!keh) return message.reply(`The key "${args[1]}" is not currently a game key.`)
 				let creator = telephone[args[1]]["user"];
 				if(creator == message.member.id) {
-					console.log("RUNNING COMMAND")
-					let runTelephone = require("./telephone/runTelephone.js");
-					runTelephone.run(keh, bot);
+					if(!telephone[args[1]]["begun"]) {
+						//telephone[args[1]]["begun"] = true;
+						fs.writeFile("telephone.json", JSON.stringify(telephone, null, 4), err => {
+							if (err) throw err;
+						})
+						console.log("RUNNING COMMAND")
+						let runTelephone = require("./telephone/runTelephone.js");
+						runTelephone.run(keh, bot);
+					} else {
+						message.reply("The telephone game with the key " + keh + " has already begun!")
+					}
 				} else {
 					return message.reply(`You are not the one who started the game of telephone with the key ${keh}. Only he can start the game.`);
 				}
